@@ -1,30 +1,30 @@
 class Solution {
 public:
-    int solveMem(vector<int>& days, vector<int>& costs, int index,vector<int> &dp){
-        if(index >= days.size())
-            return 0;
-        if(dp[index] != -1)
-            return dp[index];
+    int solveTab(vector<int>& days, vector<int>& costs){
         
+        vector<int> dp(days.size() +1, INT_MAX);
+        dp[days.size()] = 0;
         
-        int day1 = costs[0] + solveMem(days, costs, index + 1,dp);
+        for(int k = days.size() - 1; k >=0; k--){
+        int day1 = costs[0] + dp[k + 1];
         
         int i;
-        for(i = index ; i< days.size() && days[i] < days[index] + 7; i++);
+        for(i = k ; i< days.size() && days[i] < days[k] + 7; i++);
         
-        int day7 = costs[1] + solveMem(days, costs, i,dp);
+        int day7 = costs[1] + dp[i];
         
-        for(i = index ; i< days.size() && days[i] < days[index] +30; i++);
+        for(i = k ; i< days.size() && days[i] < days[k] +30; i++);
         
-        int day30 = costs[2] + solveMem(days, costs, i,dp);
+        int day30 = costs[2] + dp[i];
         
-        dp[index] = min(day1, min(day7, day30));
-        return dp[index];
+        dp[k] = min(day1, min(day7, day30));
+        }
+        return dp[0];
         
     }
     int mincostTickets(vector<int>& days, vector<int>& costs) {
-        vector<int> dp(days.size() +1, -1);
-        return solveMem(days, costs, 0,dp);
-        
+        // vector<int> dp(days.size() +1, -1);
+        // return solveMem(days, costs, 0,dp);
+        return solveTab(days, costs);
     }
 };

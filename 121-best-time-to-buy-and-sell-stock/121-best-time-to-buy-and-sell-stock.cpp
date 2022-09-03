@@ -6,10 +6,11 @@ public:
     int minsoFar= prices[0];
         
         for(int i=0; i<prices.size(); i++){
-            minsoFar = std::min(minsoFar,prices[i]);
+            minsoFar = min(minsoFar,prices[i]);
             int profit = prices[i] - minsoFar;
-            maxProfit = std::max(maxProfit,profit);
+            maxProfit = max(maxProfit,profit);
         }
         return maxProfit;
+        
     }
 };

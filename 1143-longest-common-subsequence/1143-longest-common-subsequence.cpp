@@ -18,11 +18,38 @@ public:
         return dp[curr1][curr2] = ans;
         
     }
-    int longestCommonSubsequence(string text1, string text2) {
+    
+    int solveTab(string &text1, string &text2 ){
         int l1 = text1.length();
         int l2 = text2.length();
-        vector<vector<int>> dp(l1, vector<int>(l2,-1));
         
-        return solve(0, 0, text1,text2,dp);
+        vector<vector<int>>dp(l1+1, vector<int>(l2+1,0));
+       
+        int ans = 0;
+        
+        for(int curr1 = l1 -1; curr1>=0; curr1--){
+            for(int curr2 = l2 -1; curr2 >=0 ; curr2--){
+                if( text1[curr1] == text2[curr2])
+           {
+                ans = 1 + dp[curr1+1][curr2+1];
+           }
+        else
+             ans = max(dp[curr1+1][curr2], dp[curr1][curr2+1]);
+        
+              dp[curr1][curr2] = ans;
+            }
+        }
+        
+        return dp[0][0];
+        
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+//         int l1 = text1.length();
+//         int l2 = text2.length();
+//         vector<vector<int>> dp(l1, vector<int>(l2,-1));
+        
+//         return solve(0, 0, text1,text2,dp);
+        
+        return solveTab(text1, text2);
     }
 };
